@@ -19,6 +19,13 @@ const DEFAULT_YEARS_OPTION = {
     value: 0,
 };
 
+const HEADER = [
+    {name: 'Net Income', align: 'left', id: uuidv4()},
+    {name: 'Total Revenue', align: 'left', id: uuidv4()},
+    {name: 'Fiscal Date Ending', align: 'center', id: uuidv4()},
+    {name: 'Reported Currency', align: 'center', id: uuidv4()},
+];
+
 import {API_URL, API_KEY} from '../../utils/constants.js';
 
 export default function IncomeView() {
@@ -30,9 +37,9 @@ export default function IncomeView() {
     const [symbol, setSymbol] = useState({label: 'International Business Machines Corp', value: 'IBM'});
     const [year, setYear] = useState(0);
     const [dataset, setDataset] = useState([]);
-    const [dataQuarterIncome, setDataQuarterIncome] = useState([]);
     const [loading, setLoading] = useState(true);
     const {enqueueSnackbar} = useSnackbar();
+
     const getSymbols = async () => {
         try{
         const response = await fetch(API_URL + 'query?function=LISTING_STATUS&apikey=' + API_KEY, {
@@ -56,6 +63,7 @@ export default function IncomeView() {
             setLoading(false)
         }
     }
+
     const getIncomeStatement = async (value) => {
         try{
         const response = await fetch(API_URL + 'query?function=INCOME_STATEMENT&symbol=' + value + '&apikey=' + API_KEY, {
@@ -115,6 +123,26 @@ export default function IncomeView() {
         }
     }
 
+    const handleSymbol = (value) => {
+        if (value.length > 3) {
+            const filterSymbols = symbolsData.filter((item) => {
+                return item.label.toLowerCase().includes(value.toLowerCase())
+            });
+            setSymbols(filterSymbols)
+        } else {
+            setSymbols([])
+        }
+    }
+
+    const handleChange = (event) => {
+        setYear(event.target.value);
+    };
+
+    const handleChangeSymbol = (option) => {
+        setSymbol(option);
+    };
+
+
     useEffect(() => {
         const yearsData = quarterIncome.map((item) => {
             const d = new Date(item.fiscalDateEnding);
@@ -138,31 +166,6 @@ export default function IncomeView() {
         getIncomeStatement(symbol.value)
         getBalance(symbol.value)
     }, [symbol])
-
-    const handleSymbol = (value) => {
-        if (value.length > 3) {
-            const filterSymbols = symbolsData.filter((item) => {
-                return item.label.toLowerCase().includes(value.toLowerCase())
-            });
-            setSymbols(filterSymbols)
-        } else {
-            setSymbols([])
-        }
-    }
-
-    const header = [
-        {name: 'Net Income', align: 'left', id: uuidv4()},
-        {name: 'Total Revenue', align: 'left', id: uuidv4()},
-        {name: 'Fiscal Date Ending', align: 'center', id: uuidv4()},
-        {name: 'Reported Currency', align: 'center', id: uuidv4()},
-    ];
-
-    const handleChange = (event) => {
-        setYear(event.target.value);
-    };
-    const handleChangeSymbol = (option) => {
-        setSymbol(option);
-    };
 
     useEffect(() => {
         if (quarterIncome.length === 0 || balance.length === 0) return;
@@ -191,7 +194,7 @@ export default function IncomeView() {
     if (loading) return (<CircularUnderLoad/>);
     return (
         <>
-            <FormControl>
+            <FormControl style={{paddingLeft: 8,paddingTop:10}}>
                 <Autocomplete
                     disablePortal
                     id="combo-symbol"
@@ -210,7 +213,7 @@ export default function IncomeView() {
                 />
             </FormControl>
             {symbol !== null &&
-                <FormControl style={{paddingLeft: 8}}>
+                <FormControl style={{paddingLeft: 8,paddingTop:10}}>
                     <InputLabel>Year</InputLabel>
                     <Select id="year-select" value={year} onChange={handleChange} sx={{width: 400}}>
                         {years.map((item) => (
@@ -220,7 +223,7 @@ export default function IncomeView() {
                     </Select>
                 </FormControl>}
             {dataset.length > 0 && <BasicBars dataset={dataset}/>}
-            {quarterIncome.length > 0 && <DataTable header={header}>
+            {quarterIncome.length > 0 && <DataTable header={HEADER}>
                 {quarterIncome.map((row) => (
                     <Row key={row.id} row={row}/>
                 ))}
