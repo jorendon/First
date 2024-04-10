@@ -24,7 +24,8 @@ This React application provides a visual representation of historical quarterly 
 
 ## Installation
 1. Clone the repository: `git clone https://github.com/jorendon/First.git`
-2. Install dependencies: `npm install`
+2. `cd First`
+3. Install dependencies: `npm install`
 
 ## Usage
 To run the application locally:
