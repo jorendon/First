@@ -35,6 +35,12 @@ To run the application locally:
 
 This has to be done because the API does not allow me to make more than 25 requests per day if I am not in demo mode.
 
+![image](https://github.com/jorendon/First/assets/49385111/4f3c1d92-93e8-45fc-9332-bc1287b0143e)
+
+![image](https://github.com/jorendon/First/assets/49385111/ceebeb6e-fa71-42e8-9851-ecf55f708ad1)
+
+
+
 
 
 ## Contributing
