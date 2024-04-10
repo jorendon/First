@@ -6,11 +6,13 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import {styled} from "@mui/material/styles";
 import TableCell, {tableCellClasses} from "@mui/material/TableCell";
+import PropTypes from "prop-types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: 'blue',
         color: theme.palette.common.white,
+        fontWeight: 'bold',
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
@@ -20,11 +22,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export default function DataTable({header, children}) {
     return(
         <TableContainer component={Paper} style={{ height: 400, width: '100%' }}>
-            <Table aria-label="customized table">
+            <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>
-                        {header.map((item,index) => (
-                            <StyledTableCell align={item.align}>{item.name}</StyledTableCell>
+                        {header.map((item) => (
+                            <StyledTableCell key={item.id} align={item.align}>{item.name}</StyledTableCell>
                         ))}
                     </TableRow>
                 </TableHead>
@@ -34,5 +36,13 @@ export default function DataTable({header, children}) {
             </Table>
         </TableContainer>
     )
-
+}
+DataTable.prototype = {
+    header: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            align: PropTypes.string,
+        })
+    ).isRequired,
+    children: PropTypes.node.isRequired,
 }

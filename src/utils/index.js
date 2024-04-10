@@ -1,2 +1,2 @@
-export * from './incomeParser';
+export * from './parser';
 export * from './utils';
