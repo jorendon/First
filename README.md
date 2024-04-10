@@ -33,6 +33,7 @@ To run the application locally:
 2. Open the browser and navigate to `http://127.0.0.1:5173/`
 3. To test all the functionality with a symbol other than IBM, you must comment the line API_KEY='demo' and uncomment API_KEY= import.meta.env.VITE_API_KEY
      which is located in the src/utils/constants.js file.
+4. When the API fails due to the expiration of the 25 requests, it can only be tested with "International Business Machines Corp" (IBM) in "Demo" mode.   
 
 This has to be done because the API does not allow me to make more than 25 requests per day if I am not in demo mode.
 
