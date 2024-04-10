@@ -18,9 +18,9 @@ This React application provides a visual representation of historical quarterly 
 - **Alpha Vantage API**: Fetches historical quarterly financial data for a specified stock symbol.
 - **Data Visualization**: Plots quarterly net income, total revenue, and shareholder equity from financial statements.
 - **Responsive Design**: Ensures the chart is displayed in a visually appealing manner across different devices.
-- **Search Functionality** [Optional]: Allows users to search for different stock symbols or companies via an input field or other UI elements.
+- **Search Functionality**: Allows users to search for different stock symbols or companies via an input field or other UI elements.
 - **Error Handling**: Implements robust error handling for failed API requests.
-- **Additional Enhancements**: [Describe any extra features or improvements added to the application.]
+- **Additional Enhancements**: Add a general search to display the data associated with the selected symbol in a list.
 
 ## Installation
 1. Clone the repository: `git clone https://github.com/jorendon/First.git`
@@ -30,6 +30,10 @@ This React application provides a visual representation of historical quarterly 
 To run the application locally:
 1. Start the development server: `npm run dev`
 2. Open the browser and navigate to `http://127.0.0.1:5173/`
+3. To test all the functionality with a symbol other than IBM, you must comment the line API_KEY='demo' and uncomment API_KEY= import.meta.env.VITE_API_KEY
+     which is located in the src/utils/constants.js file.
+
+This has to be done because the API does not allow me to make more than 25 requests per day if I am not in demo mode.
 
 
 
